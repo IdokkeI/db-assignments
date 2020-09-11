@@ -276,9 +276,8 @@ async function task_1_12(db) {
 async function task_1_13(db) {
     let result = await db.query(`
     SELECT
-    (select count(ProductName) FROM Products) as "TotalOfCurrentProducts",
-    (select sum(Discontinued) FROM Products) as "TotalOfDiscontinuedProducts"
- FROM Products limit 1;
+    (select count(*) from northwind.products) as "TotalOfCurrentProducts",
+	sum(Discontinued) as "TotalOfDiscontinuedProducts"
     `);
     return result[0];
 }
@@ -464,20 +463,20 @@ order by 2 desc limit 1
  */
 async function task_1_22(db) {
     let result = await db.query(`
-    SELECT
+    select
 	distinct
             Customers.CompanyName,
             Products.ProductName,
             OrderDetails.UnitPrice as "PricePerItem"
-        FROM Customers 
-        inner JOIN Orders ON Customers.CustomerID=Orders.CustomerID
-        inner JOIN OrderDetails ON Orders.OrderID=OrderDetails.OrderID
-        inner JOIN Products ON OrderDetails.ProductID=Products.ProductID
-        WHERE OrderDetails.UnitPrice = (SELECT
-                    MAX(od.UnitPrice)
-                FROM Customers as c
-                inner JOIN Orders as o ON o.CustomerID=c.CustomerID
-                inner JOIN OrderDetails as od ON od.OrderID=o.OrderID
+        from Customers 
+        inner join Orders ON Customers.CustomerID=Orders.CustomerID
+        inner join OrderDetails ON Orders.OrderID=OrderDetails.OrderID
+        inner join Products ON OrderDetails.ProductID=Products.ProductID
+        WHERE OrderDetails.UnitPrice = (select
+                MAX(od.UnitPrice)
+                from Customers as c
+                inner join Orders as o ON o.CustomerID=c.CustomerID
+                inner join OrderDetails as od ON od.OrderID=o.OrderID
                 WHERE Customers.CompanyName=c.CompanyName
                 )
 		
