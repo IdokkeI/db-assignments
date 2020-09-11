@@ -278,7 +278,7 @@ async function task_1_13(db) {
     SELECT
     (select count(ProductName) FROM Products) as "TotalOfCurrentProducts",
     (select sum(Discontinued) FROM Products) as "TotalOfDiscontinuedProducts"
- FROM Products;
+ FROM Products limit 1;
     `);
     return result[0];
 }
