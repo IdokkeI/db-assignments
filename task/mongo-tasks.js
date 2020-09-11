@@ -594,7 +594,7 @@ async function task_1_20(db) {
     ]).toArray();
 
     return result;
-
+}
 /**
  * Write a SQL statement to get the maximum purchase amount of all the orders.
  * | OrderID | Maximum Purchase Amount, $ |
