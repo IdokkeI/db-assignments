@@ -104,7 +104,8 @@ async function task_1_4(db) {
     const result = await db.collection('orders').aggregate([
         {$group:{
             _id: "$CustomerID",
-            "count": {$sum: 1}        }},
+            "count": {$sum: 1}        
+        }},
           {$project:{
               _id:0,
               "Customer Id": "$_id",
