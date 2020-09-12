@@ -90,7 +90,7 @@ async function task_1_4(db) {
     let result = await db.query(`
     SELECT 
         CustomerID as "Customer Id",
-        COUNT(CustomerID) as "Total number of orders",
+        COUNT(CustomerID) as "Total number of Orders",
         ROUND(count(*) / SUM(count(*)) OVER() * 100, 5) as "% of all orders"    
     FROM Orders
     GROUP BY CustomerID
